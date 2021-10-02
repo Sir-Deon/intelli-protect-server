@@ -23,7 +23,7 @@ mongoose
 // APIs
 const user = require("./apis/user");
 
-server.use("/api/user", user);
+server.use("/api", user);
 
 const port = process.env.PORT;
 

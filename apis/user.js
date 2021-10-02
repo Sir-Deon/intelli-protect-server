@@ -1,23 +1,24 @@
 const router = require("express").Router();
 const verify = require("./verify");
-const { v4: uuidv4 } = require("uuid");
+
 const {
   login,
-  logout,
   signup,
   blocksites,
   unblocksites,
   getSites,
+  auth_desktop,
 } = require("../controller/user");
 
-router.get("/", (req, res) => [res.send("hello there")]);
+router.get("/", (req, res) => [res.send("hello ")]);
 
-router.get("/auth", (req, res) => [
-  res.json({
-    success: true,
-    code: uuidv4(),
-  }),
-]);
+router.get("/auth_desk/:code", (req, res) => [auth_desktop(req, res)]);
 
 router.get("/get_sites", (req, res) => [getSites(req, res)]);
+
+router.post("/sign_up", (req, res) => {
+  console.log("Heyyy");
+});
+router.post("/login", (req, res) => [login(req, res)]);
+
 module.exports = router;
