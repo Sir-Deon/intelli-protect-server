@@ -38,9 +38,6 @@ const signup = async (req, res) => {
         token: token,
       });
     });
-    return res.json({
-      success: true,
-    });
   } catch (error) {
     return res.json({
       success: false,
