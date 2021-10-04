@@ -2,6 +2,7 @@ require("dotenv/config");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const User = require("../models/user");
+const Code = require("../models/code");
 const { v4: uuidv4 } = require("uuid");
 
 const signup = async (req, res) => {
@@ -79,18 +80,29 @@ const login = async (req, res) => {
   });
 };
 
-const auth_desktop = (req, res) => {
-  let desktopCode = req.params.code;
-  if (desktopCode === "code") {
-    res.json({
-      code: "intelli-" + uuidv4(),
-    });
-  } else {
-    console.log(desktopCode);
-    res.json({
-      success: true,
-    });
-  }
+const get_code = (req, res) => {
+  res.json({
+    code: "intelli-" + uuidv4(),
+  });
+};
+
+const auth_desktop = async (req, res) => {
+  const { code, id } = req.body;
+  let computers = [];
+  computers.push({
+    code: code,
+    owner: id,
+  });
+  User.findOneAndUpdate(
+    { _id: id },
+    {
+      $set: {
+        computers: computers,
+      },
+    }
+  )
+    .then(() => res.json({ success: true }))
+    .catch(() => res.json({ success: false, msg: "Something went wrong !!" }));
 };
 
 const blocksites = (req, res) => {};
@@ -125,4 +137,5 @@ module.exports = {
   signup,
   getSites,
   auth_desktop,
+  get_code,
 };

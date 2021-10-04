@@ -1,5 +1,4 @@
 const router = require("express").Router();
-const verify = require("./verify");
 
 const {
   login,
@@ -8,11 +7,14 @@ const {
   unblocksites,
   getSites,
   auth_desktop,
+  get_code,
 } = require("../controller/user");
 
 router.get("/", (req, res) => [res.send("hello there")]);
 
-router.get("/auth_desk/:code", (req, res) => [auth_desktop(req, res)]);
+router.get("/get_code", (req, res) => [get_code(req, res)]);
+
+router.post("/auth_desk", (req, res) => [auth_desktop(req, res)]);
 
 router.get("/get_sites", (req, res) => [getSites(req, res)]);
 
