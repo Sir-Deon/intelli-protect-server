@@ -110,6 +110,11 @@ const auth_desktop = async (req, res) => {
     name: name,
     code: code,
   });
+  let newPcCode = new Code({
+    owner: id,
+    code: code,
+  });
+  newPcCode.save();
   User.findOneAndUpdate(
     { _id: id },
     {
