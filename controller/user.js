@@ -98,6 +98,7 @@ const check_auth = async (req, res) => {
   } else {
     return res.json({
       success: false,
+      msg: "Something went wrong !!",
     });
   }
 };
