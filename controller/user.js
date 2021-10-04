@@ -86,6 +86,20 @@ const get_code = (req, res) => {
   });
 };
 
+const check_auth = async (req, res) => {
+  const { code } = req.params.code;
+  let computer = await Code.findOne({ code: code });
+  if (computer) {
+    res.json({
+      success: true,
+    });
+  } else {
+    return res.json({
+      success: false,
+    });
+  }
+};
+
 const auth_desktop = async (req, res) => {
   const { code, id } = req.body;
   let computers = [];
@@ -138,4 +152,5 @@ module.exports = {
   getSites,
   auth_desktop,
   get_code,
+  check_auth,
 };
