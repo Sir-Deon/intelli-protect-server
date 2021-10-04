@@ -88,19 +88,20 @@ const get_code = (req, res) => {
   });
 };
 
-const check_auth = async (req, res) => {
+const check_auth = (req, res) => {
   const { code } = req.params.code;
-  let computer = await Code.findOne({ code: code });
-  if (computer) {
-    res.json({
-      success: true,
+  Code.findOne({ code: code })
+    .then(() => {
+      res.json({
+        success: true,
+      });
+    })
+    .catch(err => {
+      res.json({
+        success: false,
+        msg: "Something went wrong !!",
+      });
     });
-  } else {
-    return res.json({
-      success: false,
-      msg: "Something went wrong !!",
-    });
-  }
 };
 
 const auth_desktop = async (req, res) => {
@@ -126,6 +127,19 @@ const auth_desktop = async (req, res) => {
     .then(() => res.json({ success: true }))
     .catch(() => res.json({ success: false, msg: "Something went wrong !!" }));
 };
+
+const getComputer = async (req, res) => {
+  let id = req.params.id;
+  let user = await User.findOne({ _id: id });
+  res.send(user.computers);
+};
+
+const editComputer = async (req, res) => {
+  const userId = req.params.id;
+  const { name, id } = req.body;
+};
+
+const deleteComputer = async (req, res) => {};
 
 const blocksites = (req, res) => {};
 
@@ -161,4 +175,7 @@ module.exports = {
   auth_desktop,
   get_code,
   check_auth,
+  getComputer,
+  editComputer,
+  deleteComputer,
 };
