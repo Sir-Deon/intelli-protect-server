@@ -36,6 +36,7 @@ const signup = async (req, res) => {
       res.status(200).json({
         success: true,
         email: email,
+        id: newUser._id,
         token: token,
       });
     });
@@ -75,6 +76,7 @@ const login = async (req, res) => {
     res.status(200).json({
       success: true,
       email: email,
+      id: user._id,
       token: token,
     });
   });
@@ -101,11 +103,11 @@ const check_auth = async (req, res) => {
 };
 
 const auth_desktop = async (req, res) => {
-  const { code, id } = req.body;
+  const { code, id, name } = req.body;
   let computers = [];
   computers.push({
+    name: name,
     code: code,
-    owner: id,
   });
   User.findOneAndUpdate(
     { _id: id },
