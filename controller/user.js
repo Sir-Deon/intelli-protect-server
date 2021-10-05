@@ -131,7 +131,7 @@ const auth_desktop = async (req, res) => {
 const getComputer = async (req, res) => {
   let id = req.params.id;
   let user = await User.findOne({ _id: id });
-  res.send(user);
+  res.send(user.computers);
 };
 
 const editComputer = async (req, res) => {
