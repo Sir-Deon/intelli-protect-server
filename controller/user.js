@@ -137,6 +137,21 @@ const getComputer = async (req, res) => {
 const editComputer = async (req, res) => {
   const userId = req.params.id;
   const { name, id } = req.body;
+  const user = await User.findOne({ _id: userId });
+  user.computers.forEach(computer => {
+    if (computer.code === id) {
+      computer.name = name;
+    }
+  });
+  await User.findByIdAndUpdate(
+    { _id: userId },
+    {
+      $set: {
+        computers: user.computers,
+      },
+    }
+  );
+  res.json({ success: true });
 };
 
 const deleteComputer = async (req, res) => {};
