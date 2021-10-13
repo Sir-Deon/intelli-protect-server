@@ -205,7 +205,6 @@ const unblocksites = (req, res) => {};
 const getSites = async (req, res) => {
   const userId = req.params.id;
   let user = await User.findOne({ _id: userId });
-  console.log(user);
   res.send(user.sites);
 };
 
