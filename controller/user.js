@@ -225,7 +225,7 @@ const getSites = async (req, res) => {
 const deleteSite = async (req, res) => {
   const { userId, id } = req.params;
   let user = await User.findOne({ _id: userId });
-  user.sites.forEach((site, index) => {
+  await user.sites.forEach((site, index) => {
     if (site.id === id) {
       user.sites.splice(index, 1);
     }
