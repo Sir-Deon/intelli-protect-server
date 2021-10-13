@@ -88,20 +88,19 @@ const get_code = (req, res) => {
   });
 };
 
-const check_auth = (req, res) => {
+const check_auth = async (req, res) => {
   const { code } = req.params.code;
-  Code.findOne({ code: code })
-    .then(() => {
-      res.json({
-        success: true,
-      });
-    })
-    .catch(err => {
-      res.json({
-        success: false,
-        msg: "Something went wrong !!",
-      });
+  let computer = await Code.findOne({ code: code }).catch(err => {
+    res.json({
+      success: false,
+      msg: "Something went wrong !!",
     });
+  });
+  if (computer) {
+    res.json({
+      success: true,
+    });
+  }
 };
 
 const auth_desktop = async (req, res) => {
