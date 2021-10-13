@@ -109,8 +109,8 @@ const check_auth = async (req, res) => {
 
 const auth_desktop = async (req, res) => {
   const { code, id, name } = req.body;
-  let computers = [];
-  computers.push({
+  let user = await User.findOne({ _id: id });
+  user.computers.push({
     name: name,
     code: code,
   });
@@ -123,7 +123,7 @@ const auth_desktop = async (req, res) => {
     { _id: id },
     {
       $set: {
-        computers: computers,
+        computers: user.computers,
       },
     }
   )
