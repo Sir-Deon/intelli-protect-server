@@ -135,9 +135,11 @@ const getComputer = async (req, res) => {
 const editComputer = async (req, res) => {
   const userId = req.params.id;
   const { name, id } = req.body;
+
+  console.log(userId);
   const user = await User.findOne({ _id: userId });
   console.log(user);
-  user.computers.forEach(computer => {
+  await user.computers.forEach(computer => {
     if (computer.code === id) {
       computer.name = name;
     }
