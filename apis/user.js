@@ -18,7 +18,7 @@ router.get("/", (req, res) => [res.send("hello there")]);
 
 router.get("/get_code", (req, res) => [get_code(req, res)]);
 
-router.get("/check_auth/:code", (req, res) => [check_auth(req, res)]);
+router.get("/check_auth/:id", (req, res) => [check_auth(req, res)]);
 
 router.post("/auth_desk", (req, res) => [auth_desktop(req, res)]);
 router.get("/get_computers/:id", (req, res) => [getComputer(req, res)]);
