@@ -100,6 +100,10 @@ const check_auth = async (req, res) => {
     res.json({
       success: true,
     });
+  } else {
+    res.json({
+      success: false,
+    });
   }
 };
 
