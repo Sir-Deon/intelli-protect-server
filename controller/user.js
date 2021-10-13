@@ -90,12 +90,7 @@ const get_code = (req, res) => {
 
 const check_auth = async (req, res) => {
   const { code } = req.params.code;
-  let computer = await Code.findOne({ code: code }).catch(err => {
-    res.json({
-      success: false,
-      msg: "Something went wrong !!",
-    });
-  });
+  let computer = await Code.findOne({ code: code });
   if (computer) {
     res.json({
       success: true,
