@@ -90,7 +90,6 @@ const get_code = (req, res) => {
 
 const check_auth = async (req, res) => {
   const { id } = req.params;
-  console.log(id);
   let computer = await Code.findOne({ code: id });
   if (computer) {
     res.json({
