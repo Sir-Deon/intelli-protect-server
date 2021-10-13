@@ -177,29 +177,36 @@ const deleteComputer = async (req, res) => {
   });
 };
 
-const blocksites = (req, res) => {};
+const blocksites = (req, res) => {
+  const { name, blocked, userId } = req.body;
+  let website = {
+    name: name,
+    blocked: blocked,
+  };
+  let user = await User.findOne({ _id: userId });
+  user.sites.push(website);
+  User.findOneAndUpdate(
+    { _id: userId },
+    {
+      $set: {
+        sites: user.sites,
+      },
+    }
+  )
+    .then(() => {
+      res.json({ success: true });
+    })
+    .catch(() => {
+      res.json({ success: false, msg: "Something went wrong !!" });
+    });
+};
 
 const unblocksites = (req, res) => {};
 
 const getSites = (req, res) => {
-  const sites = [
-    {
-      name: "remove.bg",
-      duration: "1h",
-      blocked: true,
-    },
-    {
-      name: "facebook.com",
-      duration: "1h",
-      blocked: false,
-    },
-    {
-      name: "flutter.dev",
-      duration: "1h",
-      blocked: false,
-    },
-  ];
-  res.send(sites);
+  const userId = req.params.id;
+  let user = await User.findOne({ _id: userId });
+  res.send(user.sites);
 };
 
 module.exports = {
