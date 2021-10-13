@@ -135,9 +135,7 @@ const getComputer = async (req, res) => {
 const editComputer = async (req, res) => {
   const userId = req.params.id;
   const { name, id } = req.body;
-  console.log(userId);
   const user = await User.findOne({ _id: userId });
-  console.log(user);
   await user.computers.forEach(computer => {
     if (computer.code === id) {
       computer.name = name;
@@ -179,6 +177,7 @@ const deleteComputer = async (req, res) => {
 const blocksites = async (req, res) => {
   const { name, blocked, userId } = req.body;
   let website = {
+    id: uuidv4(),
     name: name,
     blocked: blocked,
   };
@@ -200,7 +199,22 @@ const blocksites = async (req, res) => {
     });
 };
 
-const unblocksites = (req, res) => {};
+const editSite = (req, res) => {
+  const userId = req.params.id;
+  const { id, name, blocked } = req.body;
+  const user = await User.findOne({ _id: userId });
+  await user.sites.forEach(site => {
+    if (site.id === id) {
+      site.name = name;
+      site.blocked = blocked;
+    }
+  });
+  User.findOneAndUpdate({ _id: userId }, { $set: { sites: user.sites } })
+    .then(() => [res.json({ success: true })])
+    .catch(() => {
+      res.json({ success: false, msg: "Something went wrong !!" });
+    });
+};
 
 const getSites = async (req, res) => {
   const userId = req.params.id;
@@ -208,10 +222,31 @@ const getSites = async (req, res) => {
   res.send(user.sites);
 };
 
+const deleteSite = async (req, res) => {
+  const { userId, id } = req.params;
+  let user = await User.findOne({ _id: userId });
+  user.sites.forEach((site, index) => {
+    if (site.id === id) {
+      user.sites.splice(index, 1);
+    }
+  });
+  await User.findByIdAndUpdate(
+    { _id: userId },
+    {
+      $set: {
+        sites: user.sites,
+      },
+    }
+  );
+  return res.json({
+    success: true,
+  });
+};
+
 module.exports = {
   login,
   blocksites,
-  unblocksites,
+  editSite,
   signup,
   getSites,
   auth_desktop,
@@ -220,4 +255,5 @@ module.exports = {
   getComputer,
   editComputer,
   deleteComputer,
+  deleteSite,
 };

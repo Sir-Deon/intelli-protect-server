@@ -4,7 +4,8 @@ const {
   login,
   signup,
   blocksites,
-  unblocksites,
+  editSite,
+  deleteSite,
   getSites,
   auth_desktop,
   get_code,
@@ -29,6 +30,8 @@ router.delete("/delete_computer/:userId/:code", (req, res) => [
 
 router.get("/get_sites/:id", (req, res) => [getSites(req, res)]);
 router.post("/block_site", (req, res) => [blocksites(req, res)]);
+router.put("/edit_site/:id", (req, res) => [editSite(req, res)]);
+router.delete("/delete_site/:userId/:id", (req, res) => [deleteSite(req, res)]);
 
 router.post("/sign_up", (req, res) => [signup(req, res)]);
 router.post("/login", (req, res) => [login(req, res)]);
