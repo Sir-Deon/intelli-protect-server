@@ -176,7 +176,7 @@ const deleteComputer = async (req, res) => {
   });
 };
 
-const blocksites = (req, res) => {
+const blocksites = async (req, res) => {
   const { name, blocked, userId } = req.body;
   let website = {
     name: name,
