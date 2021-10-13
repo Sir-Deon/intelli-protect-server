@@ -94,6 +94,7 @@ const check_auth = async (req, res) => {
   if (computer) {
     res.json({
       success: true,
+      userId: computer.owner,
     });
   } else {
     res.json({
