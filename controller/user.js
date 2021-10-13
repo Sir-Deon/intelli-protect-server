@@ -129,7 +129,6 @@ const auth_desktop = async (req, res) => {
 const getComputer = async (req, res) => {
   let id = req.params.id;
   let user = await User.findOne({ _id: id });
-  console.log(user);
   res.send(user.computers);
 };
 
