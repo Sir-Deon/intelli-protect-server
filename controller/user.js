@@ -155,7 +155,27 @@ const editComputer = async (req, res) => {
   res.json({ success: true });
 };
 
-const deleteComputer = async (req, res) => {};
+const deleteComputer = async (req, res) => {
+  const { userId, code } = req.params;
+  await Code.findOneAndDelete({ code: code });
+  let user = await User.findOne({ _id: userId });
+  user.computers.forEach((computer, index) => {
+    if (computer.code === code) {
+      user.computers.splice(index, 1);
+    }
+  });
+  await User.findByIdAndUpdate(
+    { _id: userId },
+    {
+      $set: {
+        computers: user.computers,
+      },
+    }
+  );
+  return res.json({
+    success: true,
+  });
+};
 
 const blocksites = (req, res) => {};
 
