@@ -90,9 +90,8 @@ const get_code = (req, res) => {
 
 const check_auth = async (req, res) => {
   const { code } = req.params.code;
-  console.log("code: " + code);
+  console.log(req.params);
   let computer = await Code.findOne({ code: code });
-  console.log(computer + "test test");
   if (computer) {
     res.json({
       success: true,
