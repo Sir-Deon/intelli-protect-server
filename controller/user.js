@@ -199,7 +199,7 @@ const blocksites = async (req, res) => {
     });
 };
 
-const editSite = (req, res) => {
+const editSite = async (req, res) => {
   const userId = req.params.id;
   const { id, name, blocked } = req.body;
   const user = await User.findOne({ _id: userId });
