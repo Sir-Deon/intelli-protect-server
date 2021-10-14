@@ -84,22 +84,41 @@ const login = async (req, res) => {
 
 const editProfile = async (req, res) => {
   const { id, email, password } = req.body;
-  let user = await User.findOne({ _id: id });
-  User.findOneAndUpdate(
-    { _id: user._id },
-    {
-      $set: {
-        email: email,
-        password: password,
-      },
-    }
-  )
-    .then(() => {
-      res.json({ success: true, email: email });
-    })
-    .catch(() => {
-      res.json({ success: false, msg: "Something went wrong !!" });
-    });
+  if (password) {
+    // Encrypt the password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPasswords = await bcrypt.hash(password, salt);
+    User.findOneAndUpdate(
+      { _id: id },
+      {
+        $set: {
+          email: email,
+          password: hashedPasswords,
+        },
+      }
+    )
+      .then(() => {
+        res.json({ success: true, email: email });
+      })
+      .catch(() => {
+        res.json({ success: false, msg: "Something went wrong !!" });
+      });
+  } else {
+    User.findOneAndUpdate(
+      { _id: id },
+      {
+        $set: {
+          email: email,
+        },
+      }
+    )
+      .then(() => {
+        res.json({ success: true, email: email });
+      })
+      .catch(() => {
+        res.json({ success: false, msg: "Something went wrong !!" });
+      });
+  }
 };
 
 const get_code = (req, res) => {
