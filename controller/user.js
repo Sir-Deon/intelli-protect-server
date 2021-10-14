@@ -82,6 +82,26 @@ const login = async (req, res) => {
   });
 };
 
+const editProfile = async (req, res) => {
+  const { id, email, password } = req.body;
+  let user = await User.findOne({ _id: id });
+  User.findOneAndUpdate(
+    { _id: user._id },
+    {
+      $set: {
+        email: email,
+        password: password,
+      },
+    }
+  )
+    .then(() => {
+      res.json({ success: true, email: email });
+    })
+    .catch(() => {
+      res.json({ success: false, msg: "Something went wrong !!" });
+    });
+};
+
 const get_code = (req, res) => {
   res.json({
     code: "intelli-" + uuidv4(),
@@ -257,4 +277,5 @@ module.exports = {
   editComputer,
   deleteComputer,
   deleteSite,
+  editProfile,
 };

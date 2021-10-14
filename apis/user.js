@@ -13,6 +13,7 @@ const {
   getComputer,
   editComputer,
   deleteComputer,
+  editProfile,
 } = require("../controller/user");
 
 router.get("/", (req, res) => [res.send("hello there")]);
@@ -35,5 +36,6 @@ router.delete("/delete_site/:userId/:id", (req, res) => [deleteSite(req, res)]);
 
 router.post("/sign_up", (req, res) => [signup(req, res)]);
 router.post("/login", (req, res) => [login(req, res)]);
+router.put("/edit_profile", (req, res) => [editProfile(req, res)]);
 
 module.exports = router;
