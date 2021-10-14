@@ -283,6 +283,19 @@ const deleteSite = async (req, res) => {
   });
 };
 
+const deleteAll = async (req, res) => {
+  const id = req.params.userId;
+
+  User.findOneAndUpdate(
+    { _id: id },
+    {
+      $set: {
+        sites: [],
+      },
+    }
+  ).then(() => res.json({ success: true }));
+};
+
 module.exports = {
   login,
   blocksites,
@@ -297,4 +310,5 @@ module.exports = {
   deleteComputer,
   deleteSite,
   editProfile,
+  deleteAll,
 };

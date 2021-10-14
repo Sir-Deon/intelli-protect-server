@@ -14,6 +14,7 @@ const {
   editComputer,
   deleteComputer,
   editProfile,
+  deleteAll,
 } = require("../controller/user");
 
 router.get("/", (req, res) => [res.send("hello there")]);
@@ -33,6 +34,7 @@ router.get("/get_sites/:id", (req, res) => [getSites(req, res)]);
 router.post("/block_site", (req, res) => [blocksites(req, res)]);
 router.put("/edit_site/:id", (req, res) => [editSite(req, res)]);
 router.delete("/delete_site/:userId/:id", (req, res) => [deleteSite(req, res)]);
+router.delete("/delete_all/:userId", (req, res) => [deleteAll(req, res)]);
 
 router.post("/sign_up", (req, res) => [signup(req, res)]);
 router.post("/login", (req, res) => [login(req, res)]);
