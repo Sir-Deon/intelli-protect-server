@@ -285,7 +285,6 @@ const deleteSite = async (req, res) => {
 
 const deleteAll = async (req, res) => {
   const id = req.params.userId;
-
   User.findOneAndUpdate(
     { _id: id },
     {
